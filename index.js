@@ -7,21 +7,35 @@ const countryElm = document.getElementById("Country");
 const stateElm = document.getElementById("State");
 const FoodElm = document.getElementById("Food");
 
+const pincodeAlert = document.getElementById("pincode-alert");
+const submitbtn = document.getElementById("submit");
+
 const pincodePattern = /^\d{6}$/; // RegExp got from StackOverflow
 let user = [];
 let userObj = {};
-//  userObj = {
-//     FirstName: "",
-//     LastName: "",
-//     Address: "",
-//     Gender: "",
-//     Foods: "",
-//     Pincode: "",
-//     Country: "",
-//     State: "",
-//   };
+let pincode = "";
+let isOldData = null;
 
-function formSubmit() {
+pincodeElm.addEventListener("keyup", () => {
+  if (pincodeElm.value.split("").length < 6) {
+    return;
+  } else {
+    //   Pincode validation using RegExp..
+    if (pincodePattern.test(pincodeElm.value)) {
+      pincode = pincodeElm.value;
+      pincodeAlert.textContent = "Accepted";
+      pincodeAlert.setAttribute("class", "text-success");
+      submitbtn.removeAttribute("disabled");
+    } else {
+      pincodeAlert.textContent = "Rejected";
+      pincodeAlert.setAttribute("class", "text-danger");
+      submitbtn.setAttribute("disabled", "true");
+    }
+    console.log(pincode);
+  }
+});
+
+function getData() {
   let firstName = fnameElm.value;
   let lastName = lnameElm.value;
   let address = addressElm.value;
@@ -31,7 +45,6 @@ function formSubmit() {
   let female = genderRadioElm[1];
   let gender = "";
   let foods = [];
-  let pincode;
 
   //   Checking Gender radiobtn to get value from element
   if (male.checked) {
@@ -40,12 +53,6 @@ function formSubmit() {
     gender = female.value;
   }
   console.log("gender", gender);
-
-  //   Pincode validation using RegExp..
-  if (pincodePattern.test(pincodeElm.value)) {
-    pincode = pincodeElm.value;
-  }
-  console.log(pincode);
 
   //Favourite food select-options (trick is getting multiple values)...
   //FoodElm.options(htmloptionscollection) is array-like obj but not array so no array functions,
@@ -73,20 +80,28 @@ function formSubmit() {
     Country: country,
     State: state,
   };
+  return userObj;
+}
 
-  user.push(userObj);
+function formSubmit() {
+  let userObject = getData();
+  console.log("isolddata value", isOldData);
+  if (isOldData !== null) {
+    user[isOldData] = { ...userObject };
+    console.log("OldData", isOldData, user[isOldData], userObject);
+  } else {
+    user.push(userObject);
+    console.log("newData", user);
+  }
+
   generateTable(user);
-  //   console.log(userObj);
-  //   console.log(user);
-  //   editValues(userObj);
   clearInput();
 }
 
-function testbtn() {
-  editValues(user[0]);
-}
-function editValues(obj) {
-  console.log(obj);
+function editValues(id) {
+  let obj = user[id];
+  clearInput(); //So that we will not have previous option being selected ->Solved
+  console.log(obj, "From editVAlues func");
   fnameElm.value = obj.FirstName;
   lnameElm.value = obj.LastName;
   addressElm.value = obj.Address;
@@ -107,6 +122,10 @@ function editValues(obj) {
   document.getElementById(`${obj.Foods[1]}`).selected = true;
   document.getElementById(`${obj.Foods[0]}`).selected = true;
   //   finally selected multiple options without overriding selected attribute in each option
+
+  isOldData = id;
+  console.log("isolddata value", isOldData);
+  // this will go and provide current id while inserting details into user obj inturn user array
 }
 // dont forget to put required in all input fields
 
@@ -122,6 +141,7 @@ function clearInput() {
   FoodElm.options.selectedIndex = -1;
   document.getElementById("Food-selector").textContent =
     "hold ctrl key and select multiple options";
+  isOldData = null; //so that new values will be in new row and old will be updated in the existing row
 }
 
 const tbody = document.getElementById("table-body");
@@ -129,16 +149,20 @@ const tr = document.createElement("tr");
 const td = document.createElement("td");
 
 function generateTable(users) {
+  tbody.textContent = "";
   users.map((userdata, i) => {
-    console.log(users);
+    console.log(users, "Data", userdata);
     return (tbody.innerHTML += `
-      <tr id=${i}>
+      <tr id=${i} onclick="editValues(${i})" class="text-center">
       <td>${userdata.FirstName}</td>
       <td>${userdata.LastName}</td>
       <td>${userdata.Address}</td>
       <td>${userdata.Pincode}</td>
       <td>${userdata.Gender}</td>
-      <td>${userdata.Foods[0]}</td>
+      <td>
+      <li>${userdata.Foods[0]}</li>
+      <li>${userdata.Foods[1]}</li>
+      </td>
       <td>${userdata.State}</td>
       <td>${userdata.Country}</td>
       </tr>

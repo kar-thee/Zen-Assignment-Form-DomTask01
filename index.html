@@ -14,43 +14,47 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div id="root" class="container-fluid p-0 m-0">
+    <div id="root" class="container-fluid p-0 m-0 bg-light">
+      <h1 class="text-center bg-dark text-info p-1">Registration FORM</h1>
       <div class="container-sm">
         <!-- Form here -->
         <form class="mb-5">
           <div class="row">
-            <div class="col-sm-8 col-md-4 mt-2">
+            <div class="col-sm-8 col-md-4 mb-2">
               <label for="First-name" class="form-label">First name</label>
               <input
                 type="text"
                 class="form-control"
                 id="First-name"
                 placeholder="First Name..."
+                required
               />
             </div>
-            <div class="col-sm-8 col-md-4 mt-2">
+            <div class="col-sm-8 col-md-4 mb-2">
               <label for="Last-name" class="form-label">Last name</label>
               <input
                 type="text"
                 class="form-control"
                 id="Last-name"
                 placeholder="Last Name..."
+                required
               />
             </div>
           </div>
           <!-- name ends here -->
 
-          <div class="col-sm-8 col-md-4 mt-2">
+          <div class="col-sm-8 col-md-4 mb-2">
             <label for="Address" class="form-label">Address</label>
             <textarea
               class="form-control"
               id="Address"
               placeholder="Address..."
+              required
             ></textarea>
           </div>
           <!-- Address ends here -->
 
-          <div class="col-sm-8 col-md-4 mt-2" id="Gender">
+          <div class="col-sm-8 col-md-4 mb-2" id="Gender">
             <label for="Gender" class="form-label pe-2">Gender</label>
             <div class="form-check form-check-inline">
               <input
@@ -59,6 +63,7 @@
                 name="Gender"
                 id="Male"
                 value="Male"
+                required
               />
               <label class="form-check-label" for="Male">Male</label>
             </div>
@@ -71,13 +76,14 @@
                 name="Gender"
                 id="Female"
                 value="Female"
+                required
               />
               <label class="form-check-label" for="Female">Female</label>
             </div>
           </div>
           <!-- Female radio ends here -->
 
-          <div class="col-sm-8 col-md-4 mt-2">
+          <div class="col-sm-8 col-md-4 mb-2">
             <label for="Food" class="form-label"
               >Favourite Foods (Select 2 options)</label
             >
@@ -87,6 +93,7 @@
               aria-label="Select two options"
               aria-describedby="Food-selector"
               multiple
+              required
             >
               <option value="NorthIndian" id="NorthIndian">NorthIndian</option>
               <option value="Continental" id="Continental">Continental</option>
@@ -99,31 +106,34 @@
             </div>
           </div>
 
-          <div class="col-3 col-sm-3 col-md-2 mt-2">
+          <div class="col-3 col-sm-3 col-md-2 mb-2">
             <label for="Pincode" class="form-label">Pincode</label>
             <input
               type="text"
               class="form-control"
               id="Pincode"
               placeholder="6 digits..."
+              required
             />
           </div>
+          <div id="pincode-alert" class="form-text">
+            <!-- will be added after checking the value via JAVASCRIPT -->
+          </div>
           <!-- pincode ends here -->
+
           <div class="row">
-            <div class="col-sm-8 col-md-4 mt-2">
+            <div class="col-sm-8 col-md-4 mb-2">
               <label class="form-label" for="Country">Country</label>
               <input
                 type="text"
                 id="Country"
                 class="form-control"
                 placeholder="Your Country Name..."
+                required
               />
-              <div id="pincode-alert" class="form-text text-danger">
-                <!-- will be added after checking the value via JAVASCRIPT -->
-              </div>
             </div>
             <!-- Country ends here -->
-            <div class="col-sm-8 col-md-4 mt-2">
+            <div class="col-sm-8 col-md-4 mb-3">
               <label class="form-label" for="State">State</label>
               <input
                 type="text"
@@ -136,11 +146,13 @@
             <!-- State ends here -->
           </div>
           <!-- All required fields ends here -->
-          <div class="col-12 mt-3">
+
+          <div class="col-12 mb-2">
             <button
               class="btn btn-success"
               type="button"
               onclick="formSubmit()"
+              id="submit"
             >
               Submit
             </button>
@@ -150,7 +162,6 @@
       </div>
 
       <div class="container-sm">
-        <button onclick="testbtn()">test-btn</button>
         <!-- Table here -->
         <table class="table table-success table-striped">
           <thead>
@@ -166,7 +177,7 @@
             </tr>
           </thead>
           <tbody id="table-body">
-            <!-- here selected data appends -->
+            <!-- here selected dynamic data appends -->
           </tbody>
         </table>
       </div>
