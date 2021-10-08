@@ -130,7 +130,8 @@ const td = document.createElement("td");
 
 function generateTable(users) {
   users.map((userdata, i) => {
-    tbody.innerHTML = `
+    console.log(users);
+    return (tbody.innerHTML += `
       <tr id=${i}>
       <td>${userdata.FirstName}</td>
       <td>${userdata.LastName}</td>
@@ -141,6 +142,6 @@ function generateTable(users) {
       <td>${userdata.State}</td>
       <td>${userdata.Country}</td>
       </tr>
-      `;
+      `);
   });
 }
