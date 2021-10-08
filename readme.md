@@ -1,7 +1,7 @@
 A form created using HTML,CSS and Bootstrap along with Javascript DOM for accessing data, populating table dynamically and edit user info
 
 Demo : https://kar-thee.github.io/Zen-Assignment-Form-DomTask01/
-
+Netlify Url : https://dom-task-form-zen-assignment.netlify.app/
 
 <h3>Problem statement :</h3>
 <ul>
